@@ -36,13 +36,16 @@ RUN dpkg --add-architecture armhf && \
     rm -rf /var/lib/apt/lists/* 
     
 # Keep this just in case situation
-### Add musl-gcc aarch64 and x86_64
-#RUN wget -c https://musl.cc/x86_64-linux-musl-cross.tgz && \
-#    tar zxf ./x86_64-linux-musl-cross.tgz -C /opt && \
-#    wget -c https://musl.cc/aarch64-linux-musl-cross.tgz && \
-#    tar zxf ./aarch64-linux-musl-cross.tgz -C /opt && \
-#    rm ./x86_64-linux-musl-cross.tgz && \
-#    rm ./aarch64-linux-musl-cross.tgz
+### Add musl-gcc aarch64, x86_64 and armv7l
+RUN wget -c https://musl.cc/x86_64-linux-musl-cross.tgz && \
+    tar zxf ./x86_64-linux-musl-cross.tgz -C /opt && \
+    wget -c https://musl.cc/aarch64-linux-musl-cross.tgz && \
+    tar zxf ./aarch64-linux-musl-cross.tgz -C /opt && \
+    wget -c http://musl.cc/armv7l-linux-musleabihf-cross.tgz && \
+    tar zxf ./armv7l-linux-musleabihf-cross.tgz -C /opt && \
+    rm ./x86_64-linux-musl-cross.tgz && \
+    rm ./aarch64-linux-musl-cross.tgz && \
+    rm ./armv7l-linux-musleabihf-cross.tgz
 
 ### Add musl target
 RUN rustup target add x86_64-unknown-linux-musl && \
